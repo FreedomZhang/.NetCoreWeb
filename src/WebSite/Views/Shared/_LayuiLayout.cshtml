@@ -1,0 +1,49 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>_LayuiLayout</title>
+    <link rel="stylesheet" href="~/layui/css/layui.css">
+    <script src="~/layui/layui.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    @RenderBody()
+
+    <script type="text/javascript">
+        function AxiosGet(url, callback) {
+            axios.get(url)
+                .then(function (response) {
+                    console.log(response.data);
+                    if (!!callback) {
+                        callback(response.data);
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
+        function AxiosPost(url, data, callback) {
+            axios.post(url, data)
+                .then(function (response) {
+                    if (!!callback) {
+                        callback(response.data);
+                    }
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+    </script>
+</body>
+
+</html>

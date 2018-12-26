@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayuiLayout.cshtml";
+}
+
+<table id="demo" lay-filter="test"></table>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加分类</button>
+    </div>
+</script>
+<script>
+
+    layui.use('table', function () {
+        var table = layui.table;
+
+        var tableOptions = {
+            elem: '#demo'
+            , height: 312
+            , toolbar: '#toolbarDemo'
+            , url: '/TypeInfoes/GetContList' //数据接口
+            , cols: [[ //表头
+                { field: 'id', title: 'ID', width: 80, fixed: 'left' }
+                , { field: 'typeName', title: '分类名称', width: 200 }
+                , { field: 'createTime', title: '创建时间', width: 200 }
+                , { title: '操作', toolbar: '#barDemo', width: 150 }
+            ]]
+        };
+
+        //第一个实例
+        table.render(tableOptions);
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+            //console.log(obj)
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    AxiosPost("/TypeInfoes/DeletetypeInfo/" + obj.data.id, null, function () {
+                        obj.del();
+                    });
+                    layer.close(index);
+                });
+            } else if (obj.event === 'edit') {
+                layer.prompt({ title: '输入分类名称' }, function (val, index) {
+                    AxiosPost("/TypeInfoes/SaveForm", {
+                        Id: obj.data.id,
+                        TypeName: val
+                    },
+                        function () {
+                            table.render(tableOptions);
+                        });
+                    layer.close(index);
+                    
+                });
+
+
+                //layer.open({
+                //    type: 2,
+                //    title: '分类编辑',
+                //    shadeClose: true,
+                //    shade: false,
+                //    maxmin: true, //开启最大化最小化按钮
+                //    area: ['400px', '300px'],
+                //    content: '/TypeInfoes/Form/' + data.id,
+                //    end: function () {
+                //        //刷新
+                //    }
+                //});
+            }
+        });
+
+        table.on('toolbar(test)', function (obj) {
+            switch (obj.event) {
+                case 'add':
+                    layer.prompt({ title: '输入分类名称' }, function (val, index) {
+
+                        var data = {
+                            TypeName: val
+                        };
+                        console.log(data);
+                        AxiosPost("/TypeInfoes/SaveForm", data,
+                            function () {
+                                table.render(tableOptions);
+                            });
+                        layer.close(index);
+                    });
+                    break;
+            };
+        });
+    });
+</script>

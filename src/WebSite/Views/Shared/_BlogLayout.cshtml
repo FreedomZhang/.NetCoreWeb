@@ -1,0 +1,56 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="~/layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout">
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree">
+                    <div style="height: 300px;">
+                        <div style="height: 250px;"></div>
+                        <div style="text-align: center;">
+                            <a href="#"><i class="layui-icon" style="font-size: 20px; color: #ffffff">&#xe676;</i></a>
+                            <a href="#" style="margin-left: 10px;"><i class="layui-icon" style="font-size: 20px; color: #ffffff">&#xe677;</i></a>
+                            <a href="#" style="margin-left: 10px;"><i class="layui-icon" style="font-size: 20px; color: #ffffff">&#xe675;</i></a>
+                        </div>
+                    </div>
+                    <li class="layui-nav-item"><a href=""><i class="layui-icon" style="font-size: 20px; ">&#xe60a;</i>学无止境</a></li>
+                    <li class="layui-nav-item"><a href=""><i class="layui-icon" style="font-size: 20px; ">&#xe66f;</i>生活分享</a></li>
+                    <li class="layui-nav-item"><a href=""><i class="layui-icon" style="font-size: 20px; ">&#xe629;</i>时间线</a></li>
+                    <li class="layui-nav-item"><a href=""><i class="layui-icon" style="font-size: 20px; ">&#xe60b;</i>关于</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            @RenderBody()
+        </div>
+
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            © layui.com - 底部固定区域
+        </div>
+    </div>
+    <script src="~/layui/layui.js"></script>
+    <script>
+        //JavaScript代码区域
+        layui.use('element', function () {
+            var element = layui.element;
+
+        });
+    </script>
+</body>
+</html>

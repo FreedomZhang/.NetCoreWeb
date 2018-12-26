@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_BlogLayout.cshtml";
+}
+@model WebSite.Models.ContentInfo
+<div>
+    <div><h1 >@Model.Title</h1></div>
+    <div >
+        @Html.Raw(Model.Content)
+    </div>
+</div>

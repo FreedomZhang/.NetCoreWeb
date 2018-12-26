@@ -1,0 +1,88 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayuiLayout.cshtml";
+}
+
+<table id="demo" lay-filter="test"></table>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+    </div>
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script>
+
+    layui.use('table', function () {
+        var table = layui.table;
+        var opt = {
+            elem: '#demo',
+            height: 600,
+            toolbar: '#toolbarDemo',
+            url: '/ContentInfoes/GetDataList' //数据接口
+            ,
+            cols: [
+                [//表头
+                    { field: 'id', title: 'ID', width: 50, fixed: 'left' }, { field: 'title', title: '标题', width: 400 },
+                    { field: 'typeId', title: '类型id', width: 100 }, { field: 'clickNum', title: '点击次数', width: 100 },
+                    { field: 'state', title: '状态', width: 100 }, { field: 'createTime', title: '创建时间', width: 100 },
+                    { field: 'remarks', title: '备注', width: 200 }, { title: '操作', toolbar: '#barDemo', width: 150 }
+                ]
+            ]
+        };
+        //第一个实例
+        table.render(opt);
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+            //console.log(obj)
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    AxiosPost("/ContentInfoes/DeleteData/" + data.id,
+                        data,
+                        function (data) {
+                            if (data.data) {
+                                obj.del();
+                                layer.close(index);
+                            } else {
+                                layer.alert(data.msg);
+                            }
+                        });
+                });
+            } else if (obj.event === 'edit') {
+                layer.open({
+                    type: 2,
+                    area: ['800px', '600px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    content: '/ContentInfoes/Form/' + data.id,
+                    end: function () {
+                        table.render(opt);
+                    }
+                });
+            }
+        });
+
+
+        //头工具栏事件
+        table.on('toolbar(test)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'add':
+                    layer.open({
+                        type: 2,
+                        area: ['800px', '600px'],
+                        fixed: false, //不固定
+                        maxmin: true,
+                        content: '/ContentInfoes/Form',
+                        end: function () {
+                            table.render(opt);
+                        }
+                    });
+                    break;
+
+            };
+        });
+    });
+</script>

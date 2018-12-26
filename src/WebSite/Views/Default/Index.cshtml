@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_BlogLayout.cshtml";
+}
+@model IEnumerable<WebSite.Models.ContentInfo>
+
+
+<div style="background-color:#eee;">
+    @foreach (var item in Model)
+    {
+        <div class="layui-row" style="margin-top:10px;padding:10px;background-color:#ffffff">
+            <div class="layui-col-md2">
+                <div><img src="images/np.png" style=" height: 100px;"/></div>
+            </div>
+            <div class="layui-col-md9" >
+                <h2><a asp-controller="Default" asp-action="Details" asp-route-id="@item.Id" target="_blank">@item.Title</a></h2>
+                <div style="margin-top: 10px;">
+                    <span style="margin-left: 10px;"><i class="layui-icon" style="font-size: 18px;">&#xe60a;</i>学无止境</span>
+                    <span style="margin-left: 20px;"><i class="layui-icon" style="font-size: 18px;">&#xe705;</i> @item.ClickNum</span>
+                    <span style="margin-left: 20px;"><i class="layui-icon" style="font-size: 18px;">&#xe637;</i>@item.CreateTime</span>
+                </div>
+                <div style="margin-top: 10px;">@Html.Raw(item.ContentPreview)</div>
+                
+            </div>
+        </div>
+
+    }
+</div>
+
+

@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayuiLayout.cshtml";
+}
+@model IEnumerable<WebSite.Models.TypeInfo>;
+
+<script src="//cdn.ckeditor.com/4.11.1/standard/ckeditor.js"></script>
+<div style="margin-top: 10px;">
+    <div class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">标题</label>
+            <div class="layui-input-block">
+                <input type="text" id="Title" name="title" lay-verify="title" autocomplete="off"
+                       placeholder="请输入标题" class="layui-input" value="@(ViewBag.ContentInfo != null ? ViewBag.ContentInfo.Title : "")">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">类型</label>
+                <div class="layui-input-block">
+                    <select name="interest" id="TypeId" lay-filter="aihao">
+                        @foreach (var item in Model)
+                        {
+                            <option value="@item.Id">@item.TypeName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">是否发布</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" id="State" @(ViewBag.ContentInfo != null&&ViewBag.ContentInfo.State==1 ? "checked='checked'" : "")   name="close" lay-skin="switch" lay-text="发布|草稿">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">预览图片</label>
+                <div class="layui-input-block">
+                    <div class="layui-upload">
+                        <button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>
+                        <button type="button" class="layui-btn" id="test9">开始上传</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">内容</label>
+            <div class="layui-input-block">
+                <textarea name="Content" id="Content">@(ViewBag.ContentInfo != null ? ViewBag.ContentInfo.Content : "")</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var ckeditor = CKEDITOR.replace('Content');
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
+        laydate.render({
+            elem: '#date1'
+        });
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //监听指定开关
+        form.on('switch(switchTest)', function (data) {
+            layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
+                offset: '6px'
+            });
+        });
+        $("#save").on("click",
+            function () {
+                var content = ckeditor.getData();//内容
+                var title = $("#Title").val();//标题
+                var typeid = $("#TypeId").val();
+                var state = $("#State").prop('checked') ? "1" : "0";
+                var data = {
+                    "Content": content,
+                    "Title": title,
+                    "Typeid": typeid,
+                    "State": state
+                }
+                AxiosPost("/ContentInfoes/SaveForm",
+                    data,
+                    function (data) {
+                        if (data.data) {
+                            parent.layer.close(index);
+                        } else {
+                            layer.alert("保存失败！");
+                        }
+
+                    });
+
+            });
+    });
+
+    layui.use('upload',
+        function () {
+            var $ = layui.jquery, upload = layui.upload;
+            //上传
+            upload.render({
+                elem: '#test8'
+                , url: '/upload/'
+                , auto: false
+                //,multiple: true
+                , bindAction: '#test9'
+                , done: function (res) {
+                    console.log(res);
+                }
+            });
+        });
+</script>
+

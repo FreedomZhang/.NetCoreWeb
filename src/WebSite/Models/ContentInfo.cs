@@ -80,5 +80,10 @@ namespace WebSite.Models
         }
         [NotMapped]
         public string CreateUserName { get; set; }
+        /// <summary>
+        /// 分类名称
+        /// </summary>
+        [NotMapped]
+        public  string TypeName { get; set; }
     }
 }

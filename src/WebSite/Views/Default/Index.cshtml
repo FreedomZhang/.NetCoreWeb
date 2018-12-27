@@ -16,7 +16,7 @@
             <div class="layui-col-md9" >
                 <h2><a asp-controller="Default" asp-action="Details" asp-route-id="@item.Id" target="_blank">@item.Title</a></h2>
                 <div style="margin-top: 10px;">
-                    <span style="margin-left: 10px;"><i class="layui-icon" style="font-size: 18px;">&#xe60a;</i>学无止境</span>
+                    <span style="margin-left: 10px;"><i class="layui-icon" style="font-size: 18px;">&#xe60a;</i>@item.TypeName</span>
                     <span style="margin-left: 20px;"><i class="layui-icon" style="font-size: 18px;">&#xe705;</i> @item.ClickNum</span>
                     <span style="margin-left: 20px;"><i class="layui-icon" style="font-size: 18px;">&#xe637;</i>@item.CreateTime</span>
                 </div>

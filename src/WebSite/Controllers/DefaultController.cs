@@ -13,12 +13,29 @@ namespace WebSite.Controllers
         public IActionResult Index()
         {
             var data = _unitContext.ContentInfos.Where(a=>a.State==1).ToList();
+            foreach (var contentInfo in data)
+            {
+                var type = _unitContext.TypeInfos.Find(contentInfo.TypeId);
+                if (type != null)
+                {
+                    contentInfo.TypeName = type.TypeName;
+                }
+            }
             return View(data);
         }
 
         public IActionResult Details(int id)
         {
-            var data = _unitContext.ContentInfos.Where(a => a.Id == id).ToList()[0];
+            var data = _unitContext.ContentInfos.Find(id);
+            if (data!=null)
+            {
+                var type = _unitContext.TypeInfos.Find(data.TypeId);
+                if (type!=null)
+                {
+                    data.TypeName = type.TypeName;
+                }
+            }
+
             return View(data);
         }
     }

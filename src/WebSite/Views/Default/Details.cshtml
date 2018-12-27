@@ -4,8 +4,10 @@
     Layout = "~/Views/Shared/_BlogLayout.cshtml";
 }
 @model WebSite.Models.ContentInfo
-<div>
+<div style="margin-left: 10px; margin-top: 10px;">
     <div><h1 >@Model.Title</h1></div>
+    <div><span>创建时间 @Model.CreateTime</span><span>点击数 @Model.ClickNum</span><span>分类 @Model.TypeName</span></div>
+    <span></span>
     <div >
         @Html.Raw(Model.Content)
     </div>

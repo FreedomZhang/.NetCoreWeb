@@ -38,5 +38,21 @@ namespace WebSite.Controllers
 
             return View(data);
         }
+        /// <summary>
+        /// 时间线
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Timeline()
+        {
+            return View();
+        }
+        /// <summary>
+        /// 关于
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult About()
+        {
+            return View();
+        }
     }
 }

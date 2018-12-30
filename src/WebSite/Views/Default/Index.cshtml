@@ -11,9 +11,18 @@
     {
         <div class="layui-row" style="margin-top:10px;padding:10px;background-color:#ffffff">
             <div class="layui-col-md2">
-                <div><img src="~/images/np.png" style=" height: 100px;"/></div>
+                <div>
+                    @if (string.IsNullOrEmpty(item.PreviewImgPath))
+                    {
+                        <img src="~/images/np.png" style=" height: 100px;" />
+                    }
+                    else
+                    {
+                        <img src="@item.PreviewImgPath" style=" height: 100px;width:80%;" />
+                    }
+                </div>
             </div>
-            <div class="layui-col-md9" >
+            <div class="layui-col-md9">
                 <h2><a asp-controller="Default" asp-action="Details" asp-route-id="@item.Id" target="_blank">@item.Title</a></h2>
                 <div style="margin-top: 10px;">
                     <span style="margin-left: 10px;"><i class="layui-icon" style="font-size: 18px;">&#xe60a;</i>@item.TypeName</span>
@@ -21,10 +30,8 @@
                     <span style="margin-left: 20px;"><i class="layui-icon" style="font-size: 18px;">&#xe637;</i>@item.CreateTime</span>
                 </div>
                 <div style="margin-top: 10px;">@Html.Raw(item.ContentPreview)</div>
-                
             </div>
         </div>
-
     }
 </div>
 

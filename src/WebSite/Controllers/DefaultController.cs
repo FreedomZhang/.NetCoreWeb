@@ -10,9 +10,14 @@ namespace WebSite.Controllers
     public class DefaultController : Controller
     {
         private UnitContext _unitContext = new UnitContext();
-        public IActionResult Index()
+        public IActionResult Index(int id)
         {
-            var data = _unitContext.ContentInfos.Where(a=>a.State==1).ToList();
+            var data = _unitContext.ContentInfos.Where(a => a.State == 1).ToList();
+            if (id > 0)
+            {
+                data = data.Where(a => a.TypeId == id).ToList();
+            }
+
             foreach (var contentInfo in data)
             {
                 var type = _unitContext.TypeInfos.Find(contentInfo.TypeId);
@@ -27,12 +32,15 @@ namespace WebSite.Controllers
         public IActionResult Details(int id)
         {
             var data = _unitContext.ContentInfos.Find(id);
-            if (data!=null)
+            if (data != null)
             {
                 var type = _unitContext.TypeInfos.Find(data.TypeId);
-                if (type!=null)
+                if (type != null)
                 {
                     data.TypeName = type.TypeName;
+                    data.ClickNum++;
+                    _unitContext.Update(data);
+                    _unitContext.SaveChanges();
                 }
             }
 

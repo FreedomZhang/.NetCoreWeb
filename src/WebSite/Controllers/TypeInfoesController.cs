@@ -43,7 +43,7 @@ namespace WebSite.Controllers
                 rel.Msg = "id为空";
                 return rel;
             }
-            var typeInfo = _context.TypeInfos.SingleOrDefault(a=>a.Id==id);
+            var typeInfo = _context.TypeInfos.Find(id);
             if (typeInfo == null)
             {
                 rel.Msg = "数据为空";
@@ -59,7 +59,7 @@ namespace WebSite.Controllers
             {
                 if (_context.TypeInfos.Any(a=>a.Id==typeInfo.Id))
                 {
-                    var tinfo = _context.TypeInfos.Where(a => a.Id == typeInfo.Id).ToList()[0];
+                    var tinfo = _context.TypeInfos.Find(typeInfo.Id);
                     if (tinfo!=null)
                     {
                         tinfo.TypeName = typeInfo.TypeName;

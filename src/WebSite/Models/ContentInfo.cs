@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace WebSite.Models
@@ -63,17 +64,13 @@ namespace WebSite.Models
             {
                 if (!string.IsNullOrEmpty(this.Content))
                 {
-                    string p = "";
-                    var ayy = this.Content.Split(new string[] { "<p>", "</p>" }, StringSplitOptions.RemoveEmptyEntries);
-                    foreach (var item in ayy)
+                    string p = Html2Text(Content);
+                    if (p.Length > 20)
                     {
-                        p += item;
-                        if (p.Length > 30)
-                        {
-                            return p += "......";
-                        }
+                        p = p.Substring(0,20);
                     }
-                    return p + "......";
+
+                    return p;
                 }
                 return this.Content;
             }
@@ -84,6 +81,43 @@ namespace WebSite.Models
         /// 分类名称
         /// </summary>
         [NotMapped]
-        public  string TypeName { get; set; }
+        public string TypeName { get; set; }
+
+
+        public static string Html2Text(string htmlStr)
+
+        {
+
+            if (String.IsNullOrEmpty(htmlStr))
+
+            {
+
+                return "";
+
+            }
+
+            string regEx_style = "<style[^>]*?>[\\s\\S]*?<\\/style>"; //定义style的正则表达式 
+
+            string regEx_script = "<script[^>]*?>[\\s\\S]*?<\\/script>"; //定义script的正则表达式   
+
+            string regEx_html = "<[^>]+>"; //定义HTML标签的正则表达式   
+
+            htmlStr = Regex.Replace(htmlStr, regEx_style, "");//删除css
+
+            htmlStr = Regex.Replace(htmlStr, regEx_script, "");//删除js
+
+            htmlStr = Regex.Replace(htmlStr, regEx_html, "");//删除html标记
+
+            htmlStr = Regex.Replace(htmlStr, "\\s*|\t|\r|\n", "");//去除tab、空格、空行
+
+            htmlStr = htmlStr.Replace(" ", "");
+
+
+            return htmlStr.Trim();
+
+        }
+
+
+
     }
 }

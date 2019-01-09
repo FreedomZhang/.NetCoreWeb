@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebSite", "WebSite\WebSite.csproj", "{0679F3B7-92CC-465D-9015-A7899343FA55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qiniu", "Qiniu\Qiniu.csproj", "{C39019FC-627B-4310-A427-9651D7FFCA05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Qiniu", "Qiniu\Qiniu.csproj", "{C39019FC-627B-4310-A427-9651D7FFCA05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quan", "Quan\Quan.csproj", "{502D039E-6FC6-4E6A-B4DB-4AF5F7758D21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{C39019FC-627B-4310-A427-9651D7FFCA05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C39019FC-627B-4310-A427-9651D7FFCA05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C39019FC-627B-4310-A427-9651D7FFCA05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{502D039E-6FC6-4E6A-B4DB-4AF5F7758D21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{502D039E-6FC6-4E6A-B4DB-4AF5F7758D21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{502D039E-6FC6-4E6A-B4DB-4AF5F7758D21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{502D039E-6FC6-4E6A-B4DB-4AF5F7758D21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
